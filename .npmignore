@@ -2,3 +2,5 @@ ExampleProject
 images
 .circleci
 .git
+.babelrc
+webpack.config.js

@@ -1,6 +1,5 @@
 import React from "react"
 import { Spring } from "react-spring/renderprops"
-import "./index.css"
 
 const NUMBERS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
@@ -68,7 +67,7 @@ const AnimatedNumber = ({
   return (
     <>
       {numberHeight !== 0 && (
-        <div style={{ flexDirection: "row" }}>
+        <div style={{ display: "flex", flexDirection: "row" }}>
           {animateToNumbersArr.map((n, index) => {
             if (typeof n === "string") {
               return (
@@ -93,7 +92,7 @@ const AnimatedNumber = ({
                   to={{
                     transform: `translateY(${
                       -1 * (numberHeight * animateToNumbersArr[index])
-                      })`,
+                    })`,
                   }}
                   config={config}
                 >
@@ -109,7 +108,10 @@ const AnimatedNumber = ({
         </div>
       )}
 
-      <div ref={numberDivRef} style={{ position: "absolute", top: -9999, ...fontStyle }}>
+      <div
+        ref={numberDivRef}
+        style={{ position: "absolute", top: -9999, ...fontStyle }}
+      >
         {0}
       </div>
     </>
