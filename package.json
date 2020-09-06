@@ -1,0 +1,34 @@
+{
+  "name": "react-animated-numbers",
+  "version": "0.0.1",
+  "description": "Library showing animation of number changes in react.js",
+  "main": "index.js",
+  "typings": "index.d.ts",
+  "repository": "https://github.com/heyman333/react-animated-numbers.git",
+  "author": "youngsoohan <amazingmobdev@gmail.com>",
+  "license": "MIT",
+  "private": false,
+    "keywords": [
+    "react",
+    "react-native",
+    "animation",
+    "animated",
+    "numbers",
+    "number",
+    "spring"
+  ],
+   "bugs": {
+    "url": "https://github.com/heyman333/react-animated-numbers/issues"
+  },
+  "dependencies": {
+    "react-spring": "^8.0.27"
+  },
+  "devDependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  }
+}
