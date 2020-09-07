@@ -98,7 +98,7 @@ const AnimatedNumber = ({
                 >
                   {(props) =>
                     NUMBERS.map((number, i) => (
-                      <div style={{ ...props, ...fontStyle }}>{number}</div>
+                      <div key={i} style={{ ...props, ...fontStyle }}>{number}</div>
                     ))
                   }
                 </Spring>
