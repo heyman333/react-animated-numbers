@@ -23,16 +23,18 @@ const AnimatedNumber = ({
   includeComma,
 }) => {
   const prevNumber = usePrevious(animateToNumber)
-  const animateToNumbersArr = Array.from(String(animateToNumber), Number)
-  const prevNumberersArr = Array.from(String(prevNumber), Number)
+  const animteTonumberString = String(Math.abs(animateToNumber))
+  const prevNumberString = String(Math.abs(prevNumber))
+  const animateToNumbersArr = Array.from(animteTonumberString, Number)
+  const prevNumberersArr = Array.from(prevNumberString, Number)
 
   if (includeComma) {
     const reducedArray = new Array(
-      Math.ceil(String(animateToNumber).length / 3)
+      Math.ceil(animteTonumberString.length / 3)
     ).fill(0)
 
     const startReducedArray = new Array(
-      Math.ceil(String(prevNumber).length / 3)
+      Math.ceil(prevNumberString.length / 3)
     ).fill(0)
 
     reducedArray.map((__, index) => {
@@ -41,7 +43,7 @@ const AnimatedNumber = ({
       }
 
       animateToNumbersArr.splice(
-        String(animateToNumber).length - index * 3,
+        animteTonumberString.length - index * 3,
         0,
         ","
       )
@@ -52,7 +54,7 @@ const AnimatedNumber = ({
         return
       }
 
-      prevNumberersArr.splice(String(prevNumber).length - index * 3, 0, ",")
+      prevNumberersArr.splice(prevNumberString.length - index * 3, 0, ",")
     })
   }
 
@@ -68,6 +70,7 @@ const AnimatedNumber = ({
     <>
       {numberHeight !== 0 && (
         <div style={{ display: "flex", flexDirection: "row" }}>
+          {animateToNumber < 0 && <div style={fontStyle}>-</div>}
           {animateToNumbersArr.map((n, index) => {
             if (typeof n === "string") {
               return (
