@@ -8,6 +8,6 @@ export interface Props {
   config?: SpringConfig
 }
 
-declare const AnimatedNumber: React.SFC<Props>
+declare const AnimatedNumber: React.FunctionComponent<Props>
 
 export default AnimatedNumber
