@@ -23,6 +23,10 @@ Library showing animation of number changes in react.js
 |  animateToNumber  |   number   |   none   | Number to be animated                  |
 |     fontStyle     | React.CSSProperties?  |   none   | Style of number text        |
 |    includeComma   |  boolean?  |   false  | Whether the number contains commas     |
+|    delay          |  number(ms)?   |   undefined  | Milliseconds to decide how late to start animation |
+|    includeComma   |  boolean?  |   false  | Whether the number contains commas     |
+|    onStart   |  (): void?  |   undefined  | Function executed when animation is started     |
+|    onFinish   |  (): void?  |   undefined  | Function executed when animation is finished     |
 |       config      |   SpringConfig?  |   config.default   | This module is using [react-spring](https://www.react-spring.io) and you can refer to this [config option](https://www.react-spring.io/docs/props/spring)   |
 
 
