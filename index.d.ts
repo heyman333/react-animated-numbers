@@ -7,7 +7,6 @@ export interface Props {
   includeComma?: boolean
   config?: SpringConfig
   delay?: number
-  onFrame?: () => void
   onFinish?: () => void
   onStart?: () => void
 }
