@@ -21,12 +21,34 @@ const AnimatedNumber = ({
   fontStyle,
   config,
   includeComma,
+  delay,
+  onFinish,
+  onStart
 }) => {
   const prevNumber = usePrevious(animateToNumber)
   const animteTonumberString = String(Math.abs(animateToNumber))
   const prevNumberString = String(Math.abs(prevNumber))
   const animateToNumbersArr = Array.from(animteTonumberString, Number)
   const prevNumberersArr = Array.from(prevNumberString, Number)
+  const [onStarted, setOnStarted] = React.useState(false)
+  const [onFinished, setOnFinished] = React.useState(false)
+
+
+  React.useEffect(() => {
+    if (onStarted && onStart) {
+      const delayTime = typeof delay === "undefined" ? 0 : delay
+
+      setTimeout(() => {
+        onStart()
+      }, delayTime);
+    }
+  }, [onStarted])
+
+  React.useEffect(() => {
+    if (onFinished && onFinish) {
+      onFinish()
+    }
+  }, [onFinished])
 
   if (includeComma) {
     const reducedArray = new Array(
@@ -98,6 +120,9 @@ const AnimatedNumber = ({
                     })`,
                   }}
                   config={config}
+                  delay={delay}
+                  onRest={() => setOnFinished(true)}
+                  onStart={() => setOnStarted(true)}
                 >
                   {(props) =>
                     NUMBERS.map((number, i) => (
