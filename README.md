@@ -78,6 +78,8 @@ function App() {
           animateToNumber={number}
           includeComma
           config={{ tension: 89, friction: 40 }}
+          onStart={() => console.log("onStart")}
+          onFinish={() => console.log("onFinish")}
         />
         <div
           style={{
