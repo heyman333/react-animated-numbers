@@ -13,7 +13,7 @@ Library showing animation of number changes in react.js
 
 ### Test
 
-[Homepage](https://heyman333.github.io/animated-numbers/)
+[Homepage](https://optimistic-noyce-cf2473.netlify.app/)
 
 
 ### Props 
@@ -32,7 +32,7 @@ Library showing animation of number changes in react.js
 
 
 ### Example
-
+'
 ```js
 import React from 'react';
 import AnimatedNumber from "react-animated-numbers"

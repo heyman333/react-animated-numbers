@@ -53,7 +53,7 @@ const AnimatedNumber = ({
       const delay = getDelay(0)
       setTimeout(() => {
         onFinish()
-      }, delay)
+      }, delay);
     }
   }, [onFinished])
 
@@ -102,7 +102,7 @@ const AnimatedNumber = ({
 
       if (config && config.duration) {
         return (
-          config.duration + (animateToNumbersArr.length - 1 - index - gap) * 300
+          (animateToNumbersArr.length - 1 - index - gap) * config.duration
         )
       }
 
