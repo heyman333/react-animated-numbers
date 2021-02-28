@@ -1,21 +1,23 @@
 import React from "react"
-import AnimatedNumbers from "react-animated-numbers"
+import AnimatedNumbers from "./module"
 import "./App.css"
 
 function App() {
-	return (
-		<div className="container">
-			<AnimatedNumbers
-				animateToNumber={4224040}
+  return (
+    <div className="container">
+      <AnimatedNumbers
+        includeComma
+        animateToNumber={492892}
         fontStyle={{ fontSize: 40 }}
-        delay={400}
-				onStart={() => console.log("onStart")}
-				onFinish={() => {
-					console.log("onFinish")
-				}}
-			></AnimatedNumbers>
-		</div>
-	)
+        delay={1400}
+        onStart={() => console.log("onStart")}
+        onFinish={() => {
+          console.log("onFinish!")
+        }}
+        animationType={"calm"}
+      ></AnimatedNumbers>
+    </div>
+  )
 }
 
 export default App

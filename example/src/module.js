@@ -53,7 +53,7 @@ const AnimatedNumber = ({
       const delay = getDelay(0)
       setTimeout(() => {
         onFinish()
-      }, delay)
+      }, delay);
     }
   }, [onFinished])
 

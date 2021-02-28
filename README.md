@@ -21,6 +21,7 @@ Library showing animation of number changes in react.js
 |      name         |    type    |  default | description                            |
 |:-----------------:|:----------:|:--------:|----------------------------------------|
 |  animateToNumber  |   number   |   none   | Number to be animated                  |
+|  animationType    |   `"calm" | "random"`   |  "random"| Decide whether to increase sequentially, starting with the smallest number|
 |     fontStyle     | React.CSSProperties?  |   none   | Style of number text        |
 |    includeComma   |  boolean?  |   false  | Whether the number contains commas     |
 |    delay          |  number(ms)?   |   undefined  | Milliseconds to decide how late to start animation |
@@ -80,6 +81,7 @@ function App() {
           config={{ tension: 89, friction: 40 }}
           onStart={() => console.log("onStart")}
           onFinish={() => console.log("onFinish")}
+          animationType={"calm"}
         />
         <div
           style={{
