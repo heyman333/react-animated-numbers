@@ -32,7 +32,7 @@ Library showing animation of number changes in react.js
 
 
 ### Example
-'
+
 ```js
 import React from 'react';
 import AnimatedNumber from "react-animated-numbers"
