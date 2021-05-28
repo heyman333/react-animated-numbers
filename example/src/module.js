@@ -42,15 +42,18 @@ const AnimatedNumber = ({
         onStart()
         setOnStarted(false)
       }, delayTime)
+
+      if (onFinish && animationType === "random") { 
+        const delayTime = typeof config?.duration === "undefined" ? 500 : config.duration
+        setTimeout(() => {
+          onFinish()
+        },delayTime)
+      }
+
     }
   }, [onStarted])
 
   React.useEffect(() => {
-    if (onFinished && onFinish && animationType === "random") {
-      onFinish()
-      setOnFinished(false)
-    }
-
     if (onFinished && onFinish && animationType === "calm") {
       const delay = getDelay(0)
       setTimeout(() => {
