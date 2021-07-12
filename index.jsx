@@ -1,20 +1,22 @@
-import React, { useCallback } from "react"
-import { Spring } from "react-spring/renderprops"
+import React, { useCallback } from "react";
+import { Spring } from "react-spring/renderprops";
 
-const NUMBERS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+const NUMBERS = [
+  0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+];
 
 const usePrevious = (value) => {
-  const ref = React.useRef()
+  const ref = React.useRef();
   React.useEffect(() => {
-    ref.current = value
-  })
+    ref.current = value;
+  });
 
   if (typeof ref.current === "undefined") {
-    return 0
+    return 0;
   }
 
-  return ref.current
-}
+  return ref.current;
+};
 
 const AnimatedNumber = ({
   animateToNumber,
@@ -26,90 +28,91 @@ const AnimatedNumber = ({
   onStart,
   animationType = "random",
 }) => {
-  const prevNumber = usePrevious(animateToNumber)
-  const animteTonumberString = String(Math.abs(animateToNumber))
-  const prevNumberString = String(Math.abs(prevNumber))
-  const animateToNumbersArr = Array.from(animteTonumberString, Number)
-  const prevNumbersArr = Array.from(prevNumberString, Number)
-  const [onStarted, setOnStarted] = React.useState(false)
-  const [onFinished, setOnFinished] = React.useState(false)
+  const prevNumber = usePrevious(animateToNumber);
+  const animteTonumberString = String(Math.abs(animateToNumber));
+  const prevNumberString = String(Math.abs(prevNumber));
+  const animateToNumbersArr = Array.from(animteTonumberString, Number);
+  const prevNumbersArr = Array.from(prevNumberString, Number);
+  const [onStarted, setOnStarted] = React.useState(false);
+  const [onFinished, setOnFinished] = React.useState(false);
 
   React.useEffect(() => {
     if (onStarted && onStart) {
-      const delayTime = typeof delay === "undefined" ? 0 : delay
+      const delayTime = typeof delay === "undefined" ? 0 : delay;
 
       setTimeout(() => {
-        onStart()
-        setOnStarted(false)
-      }, delayTime)
+        onStart();
+        setOnStarted(false);
+      }, delayTime);
 
-      if (onFinish && animationType === "random") { 
-        const delayTime = typeof config?.duration === "undefined" ? 500 : config.duration
+      if (onFinish && animationType === "random") {
+        const delayTime =
+          typeof config?.duration === "undefined" ? 500 : config.duration;
         setTimeout(() => {
-          onFinish()
-        },delayTime)
+          onFinish();
+        }, delayTime);
       }
-
     }
-  }, [onStarted])
+  }, [onStarted]);
 
   if (includeComma) {
     const reducedArray = new Array(
       Math.ceil(animteTonumberString.length / 3)
-    ).fill(0)
+    ).fill(0);
 
     const startReducedArray = new Array(
       Math.ceil(prevNumberString.length / 3)
-    ).fill(0)
+    ).fill(0);
 
     reducedArray.forEach((__, index) => {
       if (index === 0) {
-        return
+        return;
       }
 
       animateToNumbersArr.splice(
         animteTonumberString.length - index * 3,
         0,
         ","
-      )
-    })
+      );
+    });
 
     startReducedArray.forEach((__, index) => {
       if (index === 0) {
-        return
+        return;
       }
 
-      prevNumbersArr.splice(prevNumberString.length - index * 3, 0, ",")
-    })
+      prevNumbersArr.splice(prevNumberString.length - index * 3, 0, ",");
+    });
   }
 
-  const [numberHeight, setNumberHeight] = React.useState(0)
+  const [numberHeight, setNumberHeight] = React.useState(0);
 
-  const numberDivRef = React.useRef(null)
+  const numberDivRef = React.useRef(null);
 
   const getDelay = useCallback(
     (index) => {
-      const sliced = animateToNumbersArr.slice(index)
-      const gap = sliced.filter((item) => typeof item === "string").length
+      const sliced = animateToNumbersArr.slice(index);
+      const gap = sliced.filter((item) => typeof item === "string").length;
 
       if (delay) {
-        return delay + (animateToNumbersArr.length - 1 - index - gap) * 200
+        return delay + (animateToNumbersArr.length - 1 - index - gap) * 200;
       }
 
       if (config && config.duration) {
         return (
-          (animateToNumbersArr.length - 1 - index - gap) * config.duration - 200
-        )
+          (animateToNumbersArr.length - 1 - index - gap) *
+          Math.max(100, (config.duration - 300))
+        );
       }
 
-      return (animateToNumbersArr.length - 1 - index - gap) * 200
+      return (animateToNumbersArr.length - 1 - index - gap) * 200;
     },
     [animateToNumbersArr, onFinished]
-  )
+  );
 
   React.useEffect(() => {
-    setNumberHeight(numberDivRef.current.clientHeight)
-  }, [animateToNumber])
+    setNumberHeight(numberDivRef.current.clientHeight);
+  }, [animateToNumber]);
 
   return (
     <>
@@ -122,7 +125,7 @@ const AnimatedNumber = ({
                 <div key={index} style={{ ...fontStyle }}>
                   {n}
                 </div>
-              )
+              );
             }
 
             return (
@@ -140,7 +143,8 @@ const AnimatedNumber = ({
                   }}
                   to={{
                     transform: `translateY(${
-                      -1 * (numberHeight * animateToNumbersArr[index]) - numberHeight * 20
+                      -1 * (numberHeight * animateToNumbersArr[index]) -
+                      numberHeight * 10
                     })`,
                   }}
                   config={config}
@@ -157,7 +161,7 @@ const AnimatedNumber = ({
                   }
                 </Spring>
               </div>
-            )
+            );
           })}
         </div>
       )}
@@ -169,7 +173,7 @@ const AnimatedNumber = ({
         {0}
       </div>
     </>
-  )
-}
+  );
+};
 
-export default AnimatedNumber
+export default AnimatedNumber;
