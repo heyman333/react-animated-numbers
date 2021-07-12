@@ -1,6 +1,6 @@
 {
   "name": "react-animated-numbers",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Library showing animation of number changes in react.js",
   "main": "./dist/index.js",
   "files": [
@@ -24,6 +24,9 @@
   "babel": {
     "presets": [
       "@babel/preset-react"
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-optional-chaining"
     ]
   },
   "scripts": {
@@ -38,6 +41,7 @@
   "devDependencies": {
     "@babel/cli": "^7.11.6",
     "@babel/core": "^7.11.6",
+    "@babel/plugin-proposal-optional-chaining": "^7.14.5",
     "@babel/preset-react": "^7.10.4",
     "babel-loader": "^8.1.0",
     "webpack": "^5.44.0",
