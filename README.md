@@ -27,7 +27,7 @@ Library showing animation of number changes in react.js
 |    delay          |  number(ms)?   |   undefined  | Milliseconds to decide how late to start animation |
 |    includeComma   |  boolean?  |   false  | Whether the number contains commas     |
 |    onStart   |  (): void?  |   undefined  | Function executed when animation is started     |
-|    onFinish   |  (): void?  |   undefined  | Function executed when animation is finished (not support `calm` anination type)    |
+|    onFinish   |  (): void?  |   undefined  | Function executed when animation is finished (not support `calm` animation type)    |
 |       config      |   SpringConfig?  |   config.default   | This module is using [react-spring](https://www.react-spring.io) and you can refer to this [config option](https://www.react-spring.io/docs/props/spring)   |
 
 
