@@ -1,7 +1,7 @@
 import React, { useCallback } from "react"
 import { Spring } from "react-spring/renderprops"
 
-const NUMBERS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+const NUMBERS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 const usePrevious = (value) => {
   const ref = React.useRef()
@@ -30,7 +30,7 @@ const AnimatedNumber = ({
   const animteTonumberString = String(Math.abs(animateToNumber))
   const prevNumberString = String(Math.abs(prevNumber))
   const animateToNumbersArr = Array.from(animteTonumberString, Number)
-  const prevNumberersArr = Array.from(prevNumberString, Number)
+  const prevNumbersArr = Array.from(prevNumberString, Number)
   const [onStarted, setOnStarted] = React.useState(false)
   const [onFinished, setOnFinished] = React.useState(false)
 
@@ -52,16 +52,6 @@ const AnimatedNumber = ({
 
     }
   }, [onStarted])
-
-  React.useEffect(() => {
-    if (onFinished && onFinish && animationType === "calm") {
-      const delay = getDelay(0)
-      setTimeout(() => {
-        onFinish()
-        setOnFinished(false)
-      }, delay);
-    }
-  }, [onFinished])
 
   if (includeComma) {
     const reducedArray = new Array(
@@ -89,7 +79,7 @@ const AnimatedNumber = ({
         return
       }
 
-      prevNumberersArr.splice(prevNumberString.length - index * 3, 0, ",")
+      prevNumbersArr.splice(prevNumberString.length - index * 3, 0, ",")
     })
   }
 
@@ -103,16 +93,16 @@ const AnimatedNumber = ({
       const gap = sliced.filter((item) => typeof item === "string").length
 
       if (delay) {
-        return delay + (animateToNumbersArr.length - 1 - index - gap) * 300
+        return delay + (animateToNumbersArr.length - 1 - index - gap) * 200
       }
 
       if (config && config.duration) {
         return (
-          (animateToNumbersArr.length - 1 - index - gap) * config.duration
+          (animateToNumbersArr.length - 1 - index - gap) * config.duration - 200
         )
       }
 
-      return (animateToNumbersArr.length - 1 - index - gap) * 300
+      return (animateToNumbersArr.length - 1 - index - gap) * 200
     },
     [animateToNumbersArr, onFinished]
   )
@@ -144,12 +134,13 @@ const AnimatedNumber = ({
                 }}
               >
                 <Spring
+                  key={animateToNumbersArr[index]}
                   from={{
                     transform: "translateY(0px)",
                   }}
                   to={{
                     transform: `translateY(${
-                      -1 * (numberHeight * animateToNumbersArr[index])
+                      -1 * (numberHeight * animateToNumbersArr[index]) - numberHeight * 20
                     })`,
                   }}
                   config={config}
