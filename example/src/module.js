@@ -1,8 +1,9 @@
 import React, { useCallback } from "react";
-import { Spring } from "react-spring/renderprops";
+import { Spring, animated } from "react-spring";
 
 const NUMBERS = [
-  0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+  0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5,
+  6, 7, 8, 9,
 ];
 
 const usePrevious = (value) => {
@@ -101,7 +102,7 @@ const AnimatedNumber = ({
       if (config && config.duration) {
         return (
           (animateToNumbersArr.length - 1 - index - gap) *
-          Math.max(100, (config.duration - 300))
+          Math.max(100, config.duration - 300)
         );
       }
 
@@ -144,19 +145,19 @@ const AnimatedNumber = ({
                   to={{
                     transform: `translateY(${
                       -1 * (numberHeight * animateToNumbersArr[index]) -
-                      numberHeight * 10
+                      numberHeight * 20
                     })`,
                   }}
-                  config={config}
                   delay={animationType === "calm" ? getDelay(index) : null}
                   onRest={() => setOnFinished(true)}
                   onStart={() => setOnStarted(true)}
+                  config={config}
                 >
                   {(props) =>
                     NUMBERS.map((number, i) => (
-                      <div key={i} style={{ ...props, ...fontStyle }}>
+                      <animated.div key={i} style={{ ...props, ...fontStyle }}>
                         {number}
-                      </div>
+                      </animated.div>
                     ))
                   }
                 </Spring>
