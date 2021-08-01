@@ -5,9 +5,7 @@ export interface Props {
   animateToNumber: number
   fontStyle?: React.CSSProperties
   includeComma?: boolean
-  config?: SpringConfig
-  delay?: number
-  animationType?: "calm" | "random"
+  configs?: SpringConfig[]
   onFinish?: () => void
   onStart?: () => void
 }
