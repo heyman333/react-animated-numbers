@@ -5,8 +5,6 @@
 <img src="http://img.shields.io/npm/dm/react-animated-numbers.svg?style=flat-square">
 </a>
 
-
-
 # react-animated-numbers
 
 Library showing animation of number changes in react.js
@@ -15,88 +13,58 @@ Library showing animation of number changes in react.js
 
 [Homepage](https://optimistic-noyce-cf2473.netlify.app/)
 
+### Props
 
-### Props 
+|      name       |         type         |    default     | description                                                                                                                                                                                                                                                                                               |
+| :-------------: | :------------------: | :------------: | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| animateToNumber |        number        |      none      | Number to be animated                                                                                                                                                                                                                                                                                     |
+|    fontStyle    | React.CSSProperties? |      none      | Style of number text                                                                                                                                                                                                                                                                                      |
+|  includeComma   |       boolean?       |     false      | Whether the number contains commas                                                                                                                                                                                                                                                                        |
+|     onStart     |      (): void?       |   undefined    | Function executed when animation is started                                                                                                                                                                                                                                                               |
+|    onFinish     |      (): void?       |   undefined    | Function executed when animation is finished (not support `calm` animation type)                                                                                                                                                                                                                          |
+|     configs     |   SpringConfig[]?    | config.default | This module is using [react-spring](https://www.react-spring.io) and you can refer to this [config option](https://react-spring.io/common/configs). If you pass multiple settings, an animation is randomly assigned to each number. _ DO NOT USE `duration` because of a bug that hasn't been fixed yet_ |
 
-|      name         |    type    |  default | description                            |
-|:-----------------:|:----------:|:--------:|----------------------------------------|
-|  animateToNumber  |   number   |   none   | Number to be animated                  |
-|  animationType    |   "calm" or "random"`   |  "random"| Decide whether to increase sequentially, starting with the smallest number|
-|     fontStyle     | React.CSSProperties?  |   none   | Style of number text        |
-|    includeComma   |  boolean?  |   false  | Whether the number contains commas     |
-|    delay          |  number(ms)?   |   undefined  | Milliseconds to decide how late to start animation |
-|    includeComma   |  boolean?  |   false  | Whether the number contains commas     |
-|    onStart   |  (): void?  |   undefined  | Function executed when animation is started     |
-|    onFinish   |  (): void?  |   undefined  | Function executed when animation is finished (not support `calm` animation type)    |
-|       config      |   SpringConfig?  |   config.default   | This module is using [react-spring](https://www.react-spring.io) and you can refer to this [config option](https://react-spring.io/common/configs)   |
-
+### Custom Style
+ - you can use className `animated-container` to style container ([example](https://github.com/heyman333/react-animated-numbers/blob/master/example/src/App.css))
+ - if you want to customize font style. Just ues `fontStyle` prop
 
 ### Example
 
 ```js
-import React from 'react';
-import AnimatedNumber from "react-animated-numbers"
+import React from "react";
+import AnimatedNumbers from "./module";
+import "./App.css";
 
 function App() {
-  const [number, setNumber] = React.useState(0)
-  const [diff, setDiff] = React.useState(0)
-
-  const increaseNumber = () => {
-    setNumber(number + diff)
-  }
-
-  const decreaseNumber = () => {
-    setNumber(number - diff)
-  }
-
-  const onChangeValue = (e) => {
-    const number = Number(e.target.value)
-    setDiff(number)
-  }
-
+  const [num, setNum] = React.useState(331231);
   return (
-    <div className="App">
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-          flexDirection: "column",
+    <div className="container">
+      <AnimatedNumbers
+        includeComma
+        animateToNumber={num}
+        fontStyle={{ fontSize: 40 }}
+        onStart={() => console.log("onStart")}
+        onFinish={() => {
+          console.log("onFinish!");
         }}
-      >
-        <label htmlFor="value">Number Difference</label>
-        <input
-          id="value"
-          title="value"
-          placeholder="Difference"
-          type="number"
-          style={{ marginBottom: 30 }}
-          onChange={onChangeValue}
-        />
-        <AnimatedNumber
-          fontStyle={{ fontFamily: "Nunito", fontSize: 40 }}
-          animateToNumber={number}
-          includeComma
-          config={{ tension: 89, friction: 40 }}
-          onStart={() => console.log("onStart")}
-          onFinish={() => console.log("onFinish")}
-          animationType={"calm"}
-        />
-        <div
-          style={{
-            height: 60,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-            marginTop: 40,
-          }}
-        >
-          <button onClick={increaseNumber}>increase Number</button>
-          <button onClick={decreaseNumber}>decrease Number</button>
-        </div>
+        configs={[
+          { mass: 1, tension: 220, friction: 100 },
+          { mass: 1, tension: 180, friction: 130 },
+          { mass: 1, tension: 280, friction: 90 },
+          { mass: 1, tension: 180, friction: 135 },
+          { mass: 1, tension: 260, friction: 100 },
+          { mass: 1, tension: 210, friction: 180 },
+        ]}
+      ></AnimatedNumbers>
+      <div>
+        <button onClick={() => setNum((state) => state + 31234)}>+</button>
+        <button onClick={() => setNum((state) => state - 31234)}>-</button>
       </div>
     </div>
-  )
+  );
+}
+
+export default App;
+
 }
 ```
