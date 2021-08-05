@@ -121,6 +121,7 @@ const AnimatedNumber = ({
       )}
 
       <div
+        data-testid="default"
         ref={numberDivRef}
         style={{ position: "absolute", top: -9999, ...fontStyle }}
       >
