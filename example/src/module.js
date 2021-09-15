@@ -17,24 +17,9 @@ const AnimatedNumber = ({
   fontStyle,
   configs,
   includeComma,
-  onFinish,
-  onStart,
 }) => {
   const animteTonumberString = String(Math.abs(animateToNumber));
   const animateToNumbersArr = Array.from(animteTonumberString, Number);
-  const [onStarted, setOnStarted] = React.useState(false);
-  const [onFinished, setOnFinished] = React.useState(false);
-
-  React.useEffect(() => {
-    if (onStarted && onStart) {
-      onStart();
-      setOnStarted(false);
-    }
-    if (onFinished && onFinish) {
-      onFinish();
-      setOnFinished(false);
-    }
-  }, [onStarted, onFinished, onFinish, onStart]);
 
   if (includeComma) {
     const reducedArray = new Array(
@@ -98,8 +83,6 @@ const AnimatedNumber = ({
                       numberHeight * 20
                     })`,
                   }}
-                  onRest={() => setOnFinished(true)}
-                  onStart={() => setOnStarted(true)}
                   config={
                     configs
                       ? configs[getRandomIntInclusive(0, configs.length - 1)]

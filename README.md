@@ -9,24 +9,23 @@
 
 Library showing animation of number changes in react.js
 
-### Test
+## Test
 
 [Homepage](https://optimistic-noyce-cf2473.netlify.app/)
 
-### Props
+## Props
 
 |      name       |         type         |    default     | description                                                                                                                                                                                                                                                                                               |
 | :-------------: | :------------------: | :------------: | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | animateToNumber |        number        |      none      | Number to be animated                                                                                                                                                                                                                                                                                     |
 |    fontStyle    | React.CSSProperties? |      none      | Style of number text                                                                                                                                                                                                                                                                                      |
 |  includeComma   |       boolean?       |     false      | Whether the number contains commas                                                                                                                                                                                                                                                                        |
-|     onStart     |      (): void?       |   undefined    | Function executed when animation is started                                                                                                                                                                                                                                                               |
-|    onFinish     |      (): void?       |   undefined    | Function executed when animation is finished                                                                                                                                                                                                                       |
 |     configs     |   SpringConfig[]?    | config.default | This module is using [react-spring](https://www.react-spring.io) and you can refer to this [config option](https://react-spring.io/common/configs). If you pass multiple settings, an animation is randomly assigned to each number. _ DO NOT USE `duration` because of a bug that hasn't been fixed yet_ |
 
 ### Custom Style
- - you can use className `animated-container` to style container ([example](https://github.com/heyman333/react-animated-numbers/blob/master/example/src/App.css))
- - if you want to customize font style. Just ues `fontStyle` prop
+
+- you can use className `animated-container` to style container ([example](https://github.com/heyman333/react-animated-numbers/blob/master/example/src/App.css))
+- if you want to customize font style. Just ues `fontStyle` prop
 
 ### Example
 
@@ -43,10 +42,6 @@ function App() {
         includeComma
         animateToNumber={num}
         fontStyle={{ fontSize: 40 }}
-        onStart={() => console.log("onStart")}
-        onFinish={() => {
-          console.log("onFinish!");
-        }}
         configs={[
           { mass: 1, tension: 220, friction: 100 },
           { mass: 1, tension: 180, friction: 130 },
@@ -65,6 +60,9 @@ function App() {
 }
 
 export default App;
-
-}
 ```
+
+## Todo
+
+- [ ] test code
+- [ ] start animation when dom is visible
