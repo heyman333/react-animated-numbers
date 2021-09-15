@@ -44,7 +44,10 @@ const AnimatedNumber = ({
   const numberDivRef = React.useRef(null);
 
   React.useEffect(() => {
-    setNumberHeight(numberDivRef.current.clientHeight);
+    const height = numberDivRef.current.getClientRects()?.[0]?.height;
+    if (height) {
+      setNumberHeight(height);
+    }
   }, [animateToNumber]);
 
   return (
