@@ -65,4 +65,4 @@ export default App;
 ## Todo
 
 - [ ] test code
-- [ ] start animation when dom is visible
+- [x] start animation when dom is visible
