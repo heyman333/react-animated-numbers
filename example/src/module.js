@@ -6,12 +6,24 @@ const NUMBERS = [
   6, 7, 8, 9,
 ];
 
+// utils
+function getIsElementVisible({ viewPortHeight, elem }) {
+  if (!elem?.getBoundingClientRect) {
+    return false;
+  }
+
+  const { top: rectTop, bottom: rectBottom } = elem.getBoundingClientRect();
+
+  return rectTop > 0 && rectBottom < viewPortHeight;
+}
+
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+// lib
 const AnimatedNumber = ({
   animateToNumber,
   fontStyle,
@@ -40,8 +52,35 @@ const AnimatedNumber = ({
   }
 
   const [numberHeight, setNumberHeight] = React.useState(0);
+  const [visible, setVisible] = React.useState(false);
 
   const numberDivRef = React.useRef(null);
+  const containerDivRef = React.useRef(null);
+
+  React.useEffect(() => {
+    const scrollHandler = () => {
+      const isElementVisible = getIsElementVisible({
+        viewPortHeight: window?.innerHeight,
+        elem: containerDivRef?.current,
+      });
+
+      if (isElementVisible) {
+        setVisible(true);
+      }
+    };
+
+    if (numberHeight === 0) {
+      return;
+    }
+
+    scrollHandler();
+
+    window.addEventListener("scroll", scrollHandler);
+
+    return () => {
+      window.removeEventListener("scroll", scrollHandler);
+    };
+  }, [numberHeight]);
 
   React.useEffect(() => {
     const height = numberDivRef.current.getClientRects()?.[0]?.height;
@@ -54,55 +93,60 @@ const AnimatedNumber = ({
     <>
       {numberHeight !== 0 && (
         <div
+          ref={containerDivRef}
           style={{ display: "flex", flexDirection: "row" }}
           className="animated-container"
         >
           {animateToNumber < 0 && <div style={fontStyle}>-</div>}
-          {animateToNumbersArr.map((n, index) => {
-            if (typeof n === "string") {
+          {visible &&
+            animateToNumbersArr.map((n, index) => {
+              if (typeof n === "string") {
+                return (
+                  <div key={index} style={{ ...fontStyle }}>
+                    {n}
+                  </div>
+                );
+              }
+
               return (
-                <div key={index} style={{ ...fontStyle }}>
-                  {n}
+                <div
+                  key={index}
+                  style={{
+                    height: numberHeight,
+                    overflow: "hidden",
+                  }}
+                >
+                  <Spring
+                    key={animateToNumbersArr[index]}
+                    from={{
+                      transform: "translateY(0px)",
+                    }}
+                    to={{
+                      transform: `translateY(${
+                        -1 * (numberHeight * animateToNumbersArr[index]) -
+                        numberHeight * 20
+                      })`,
+                    }}
+                    config={
+                      configs
+                        ? configs[getRandomIntInclusive(0, configs.length - 1)]
+                        : undefined
+                    }
+                  >
+                    {(props) =>
+                      NUMBERS.map((number, i) => (
+                        <animated.div
+                          key={i}
+                          style={{ ...props, ...fontStyle }}
+                        >
+                          {number}
+                        </animated.div>
+                      ))
+                    }
+                  </Spring>
                 </div>
               );
-            }
-
-            return (
-              <div
-                key={index}
-                style={{
-                  height: numberHeight,
-                  overflow: "hidden",
-                }}
-              >
-                <Spring
-                  key={animateToNumbersArr[index]}
-                  from={{
-                    transform: "translateY(0px)",
-                  }}
-                  to={{
-                    transform: `translateY(${
-                      -1 * (numberHeight * animateToNumbersArr[index]) -
-                      numberHeight * 20
-                    })`,
-                  }}
-                  config={
-                    configs
-                      ? configs[getRandomIntInclusive(0, configs.length - 1)]
-                      : undefined
-                  }
-                >
-                  {(props) =>
-                    NUMBERS.map((number, i) => (
-                      <animated.div key={i} style={{ ...props, ...fontStyle }}>
-                        {number}
-                      </animated.div>
-                    ))
-                  }
-                </Spring>
-              </div>
-            );
-          })}
+            })}
         </div>
       )}
 
