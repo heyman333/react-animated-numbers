@@ -30,6 +30,7 @@ const AnimatedNumber = ({
   configs,
   includeComma,
 }) => {
+  const keyCount = React.useRef(0);
   const animteTonumberString = String(Math.abs(animateToNumber));
   const animateToNumbersArr = Array.from(animteTonumberString, Number);
 
@@ -117,7 +118,7 @@ const AnimatedNumber = ({
                   }}
                 >
                   <Spring
-                    key={animateToNumbersArr[index]}
+                    key={`${keyCount.current++}`}
                     from={{
                       transform: "translateY(0px)",
                     }}
