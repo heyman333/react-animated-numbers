@@ -2,8 +2,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: red;
   flex-direction: column;
+  height: 100vh;
 }
 
 .container .scroll {
