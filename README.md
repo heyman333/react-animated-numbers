@@ -15,12 +15,13 @@ Library showing animation of number changes in react.js
 
 ## Props
 
-|      name       |         type         |    default     | description                                                                                                                                                                                                                                                                                               |
-| :-------------: | :------------------: | :------------: | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| animateToNumber |        number        |      none      | Number to be animated                                                                                                                                                                                                                                                                                     |
-|    fontStyle    | React.CSSProperties? |      none      | Style of number text                                                                                                                                                                                                                                                                                      |
-|  includeComma   |       boolean?       |     false      | Whether the number contains commas                                                                                                                                                                                                                                                                        |
-|     configs     |   SpringConfig[]?    | config.default | This module is using [react-spring](https://www.react-spring.io) and you can refer to this [config option](https://react-spring.io/common/configs). If you pass multiple settings, an animation is randomly assigned to each number. _ DO NOT USE `duration` because of a bug that hasn't been fixed yet_ |
+|      name       |              type              |    default     | description                                                                                                                                                                                                                                                                                               |
+| :-------------: | :----------------------------: | :------------: | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| animateToNumber |             number             |      none      | Number to be animated                                                                                                                                                                                                                                                                                     |
+|    fontStyle    |      React.CSSProperties?      |      none      | Style of number text                                                                                                                                                                                                                                                                                      |
+|  includeComma   |            boolean?            |     false      | Whether the number contains commas                                                                                                                                                                                                                                                                        |
+|   configs(1)    |        SpringConfig[]?         | config.default | This module is using [react-spring](https://www.react-spring.io) and you can refer to this [config option](https://react-spring.io/common/configs). If you pass multiple settings, an animation is randomly assigned to each number. _ DO NOT USE `duration` because of a bug that hasn't been fixed yet_ |
+|   configs(2)    | (number, number): SpringConfig | config.default | The first parameter gives information about the number to be changed, And the second parameter gives information about the order of the changing numbers. You can use that information to adjust the animation by returning the config                                                                    |
 
 ### Custom Style
 
@@ -31,7 +32,7 @@ Library showing animation of number changes in react.js
 
 ```js
 import React from "react";
-import AnimatedNumbers from "./module";
+import AnimatedNumbers from "react-animated-numbers";
 import "./App.css";
 
 function App() {
@@ -50,6 +51,14 @@ function App() {
           { mass: 1, tension: 260, friction: 100 },
           { mass: 1, tension: 210, friction: 180 },
         ]}
+      ></AnimatedNumbers>
+
+      <AnimatedNumbers
+        animateToNumber={num}
+        fontStyle={{ fontSize: 32 }}
+        configs={(number, index) => {
+          return { mass: 1, tension: 230 * (index + 1), friction: 140 };
+        }}
       ></AnimatedNumbers>
       <div>
         <button onClick={() => setNum((state) => state + 31234)}>+</button>
