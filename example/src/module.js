@@ -58,6 +58,15 @@ const AnimatedNumber = ({
   const numberDivRef = React.useRef(null);
   const containerDivRef = React.useRef(null);
 
+  const setConfig = (configs, number, index) => {
+    if (typeof configs === "function") {
+      return configs(number, index);
+    }
+    return configs
+      ? configs[getRandomIntInclusive(0, configs.length - 1)]
+      : undefined;
+  };
+
   React.useEffect(() => {
     const scrollHandler = () => {
       const isElementVisible = getIsElementVisible({
@@ -128,11 +137,7 @@ const AnimatedNumber = ({
                         numberHeight * 20
                       })`,
                     }}
-                    config={
-                      configs
-                        ? configs[getRandomIntInclusive(0, configs.length - 1)]
-                        : undefined
-                    }
+                    config={setConfig(configs, n, index)}
                   >
                     {(props) =>
                       NUMBERS.map((number, i) => (
