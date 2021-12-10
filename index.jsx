@@ -32,7 +32,7 @@ const AnimatedNumber = ({
 }) => {
   const keyCount = React.useRef(0);
   const animteTonumberString = String(Math.abs(animateToNumber));
-  const animateToNumbersArr = Array.from(animteTonumberString, Number);
+  const animateToNumbersArr = Array.from(animteTonumberString, Number)).map(x => isNaN(x) ? '.' : x);
 
   if (includeComma) {
     const reducedArray = new Array(
