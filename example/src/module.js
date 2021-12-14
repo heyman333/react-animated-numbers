@@ -31,26 +31,11 @@ const AnimatedNumber = ({
   includeComma,
 }) => {
   const keyCount = React.useRef(0);
-  const animteTonumberString = String(Math.abs(animateToNumber));
-  const animateToNumbersArr = Array.from(animteTonumberString, Number);
-
-  if (includeComma) {
-    const reducedArray = new Array(
-      Math.ceil(animteTonumberString.length / 3)
-    ).fill(0);
-
-    reducedArray.forEach((__, index) => {
-      if (index === 0) {
-        return;
-      }
-
-      animateToNumbersArr.splice(
-        animteTonumberString.length - index * 3,
-        0,
-        ","
-      );
-    });
-  }
+  const animteTonumberString = includeComma
+    ? Math.abs(animateToNumber).toLocaleString()
+    : String(Math.abs(animateToNumber));
+  const animateToNumbersArr = Array.from(animteTonumberString, Number)
+    .map((x, idx) => isNaN(x) ? animteTonumberString[idx] : x);
 
   const [numberHeight, setNumberHeight] = React.useState(0);
   const [visible, setVisible] = React.useState(false);
