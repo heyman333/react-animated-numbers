@@ -31,7 +31,8 @@
     ]
   },
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "test": "yarn jest ./__tests__/*.js"
   },
   "bugs": {
     "url": "https://github.com/heyman333/react-animated-numbers/issues"
@@ -43,11 +44,22 @@
     "@babel/cli": "^7.11.6",
     "@babel/core": "^7.11.6",
     "@babel/plugin-proposal-optional-chaining": "^7.14.5",
-    "@babel/preset-react": "^7.10.4",
+    "@babel/preset-env": "^7.15.0",
+    "@babel/preset-react": "^7.14.5",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.0.0",
+    "babel-jest": "^27.0.6",
     "babel-loader": "^8.1.0",
+    "jest": "^27.0.6",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-test-renderer": "^17.0.2",
     "webpack": "^5.44.0",
     "webpack-cli": "^4.7.2"
   },
+  "setupFilesAfterEnv": [
+    "@testing-library/jest-dom/extend-expect"
+  ],
   "peerDependencies": {
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
