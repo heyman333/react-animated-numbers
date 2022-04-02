@@ -1,6 +1,6 @@
 {
   "name": "react-animated-numbers",
-  "version": "0.10.1",
+  "version": "0.11.0",
   "description": "Library showing animation of number changes in react.js",
   "main": "./dist/index.js",
   "files": [
@@ -37,7 +37,8 @@
     "url": "https://github.com/heyman333/react-animated-numbers/issues"
   },
   "dependencies": {
-    "react-spring": "^9.2.3"
+    "react-intersection-observer": "^8.33.1",
+    "react-spring": "^9.4.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.11.6",

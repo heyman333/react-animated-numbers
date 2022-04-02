@@ -1,5 +1,6 @@
 import React from "react";
 import { Spring, animated } from "react-spring";
+import { useInView } from "react-intersection-observer";
 
 const NUMBERS = [
   0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5,
@@ -7,16 +8,6 @@ const NUMBERS = [
 ];
 
 // utils
-function getIsElementVisible({ viewPortHeight, elem }) {
-  if (!elem?.getBoundingClientRect) {
-    return false;
-  }
-
-  const { top: rectTop, bottom: rectBottom } = elem.getBoundingClientRect();
-
-  return rectTop > 0 && rectBottom < viewPortHeight;
-}
-
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -30,18 +21,18 @@ const AnimatedNumber = ({
   configs,
   includeComma,
 }) => {
+  const { ref, inView } = useInView({ triggerOnce: true });
   const keyCount = React.useRef(0);
   const animteTonumberString = includeComma
     ? Math.abs(animateToNumber).toLocaleString()
     : String(Math.abs(animateToNumber));
-  const animateToNumbersArr = Array.from(animteTonumberString, Number)
-    .map((x, idx) => isNaN(x) ? animteTonumberString[idx] : x);
+  const animateToNumbersArr = Array.from(animteTonumberString, Number).map(
+    (x, idx) => (isNaN(x) ? animteTonumberString[idx] : x)
+  );
 
   const [numberHeight, setNumberHeight] = React.useState(0);
-  const [visible, setVisible] = React.useState(false);
 
   const numberDivRef = React.useRef(null);
-  const containerDivRef = React.useRef(null);
 
   const setConfig = (configs, number, index) => {
     if (typeof configs === "function") {
@@ -51,31 +42,6 @@ const AnimatedNumber = ({
       ? configs[getRandomIntInclusive(0, configs.length - 1)]
       : undefined;
   };
-
-  React.useEffect(() => {
-    const scrollHandler = () => {
-      const isElementVisible = getIsElementVisible({
-        viewPortHeight: window?.innerHeight,
-        elem: containerDivRef?.current,
-      });
-
-      if (isElementVisible) {
-        setVisible(true);
-      }
-    };
-
-    if (numberHeight === 0) {
-      return;
-    }
-
-    scrollHandler();
-
-    window.addEventListener("scroll", scrollHandler);
-
-    return () => {
-      window.removeEventListener("scroll", scrollHandler);
-    };
-  }, [numberHeight]);
 
   React.useEffect(() => {
     const height = numberDivRef.current.getClientRects()?.[0]?.height;
@@ -88,12 +54,12 @@ const AnimatedNumber = ({
     <>
       {numberHeight !== 0 && (
         <div
-          ref={containerDivRef}
+          ref={ref}
           style={{ display: "flex", flexDirection: "row" }}
           className="animated-container"
         >
-          {animateToNumber < 0 && <div style={fontStyle}>-</div>}
-          {visible &&
+          {inView && animateToNumber < 0 && <div style={fontStyle}>-</div>}
+          {inView &&
             animateToNumbersArr.map((n, index) => {
               if (typeof n === "string") {
                 return (
