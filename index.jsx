@@ -48,7 +48,7 @@ const AnimatedNumber = ({
     if (height) {
       setNumberHeight(height);
     }
-  }, [animateToNumber]);
+  }, [animateToNumber, fontStyle]);
 
   return (
     <>
@@ -94,7 +94,7 @@ const AnimatedNumber = ({
                       NUMBERS.map((number, i) => (
                         <animated.div
                           key={i}
-                          style={{ ...props, ...fontStyle }}
+                          style={{ ...fontStyle,...props }}
                         >
                           {number}
                         </animated.div>
@@ -117,4 +117,6 @@ const AnimatedNumber = ({
   );
 };
 
-export default AnimatedNumber;
+const Enhanced = React.memo(AnimatedNumber)
+
+export default Enhanced;
