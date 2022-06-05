@@ -117,6 +117,8 @@ const AnimatedNumber = ({
   );
 };
 
-const Enhanced = React.memo(AnimatedNumber)
+const Enhanced = React.memo(AnimatedNumber, (prevProps, nextProps) => {
+    return prevProps.animateToNumber === nextProps.animateToNumber
+})
 
 export default Enhanced;
