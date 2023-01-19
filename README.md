@@ -28,6 +28,22 @@ Library showing animation of number changes in react.js
 - you can use className `animated-container` to style container ([example](https://github.com/heyman333/react-animated-numbers/blob/master/example/src/App.css))
 - if you want to customize font style. Just ues `fontStyle` prop
 
+### Next JS
+
+You have to use dynamic imports to ensure that this library is imported on the client side only.
+
+Import the library like this:
+
+```
+import dynamic from "next/dynamic";
+const AnimatedNumbers = dynamic(() => import("react-animated-numbers"), {
+  ssr: false,
+});
+```
+
+Credit to @jedwardblack for [this](https://github.com/heyman333/react-animated-numbers/issues/40)
+
+
 ### Example
 
 ```js
