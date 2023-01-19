@@ -1,5 +1,5 @@
 import React from "react";
-import { SpringConfig } from "react-spring";
+import { SpringConfig } from "@react-spring/web";
 
 export interface Props {
   animateToNumber: number;

@@ -1,5 +1,5 @@
 import React from "react";
-import { Spring, animated } from "react-spring";
+import { Spring, animated } from "@react-spring/web";
 import { useInView } from "react-intersection-observer";
 
 const NUMBERS = [
