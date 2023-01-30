@@ -1,7 +1,7 @@
 import React from "react";
 import { SpringConfig } from "react-spring";
 
-type configsFn = ({numberValue, index}: {numberValue: number, index: number}) => SpringConfig;
+type configsFn = (numberValue: number, index: number) => SpringConfig;
 
 export interface Props {
   animateToNumber: number;
