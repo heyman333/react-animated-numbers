@@ -8,6 +8,7 @@ export interface Props {
   fontStyle?: React.CSSProperties;
   includeComma?: boolean;
   configs?: SpringConfig[] | configsFn;
+  locale?: string;
 }
 
 declare const AnimatedNumber: React.FunctionComponent<Props>;

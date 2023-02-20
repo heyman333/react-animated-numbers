@@ -20,6 +20,7 @@ Library showing animation of number changes in react.js
 | animateToNumber |             number             |      none      | Number to be animated                                                                                                                                                                                                                                                                                     |
 |    fontStyle    |      React.CSSProperties?      |      none      | Style of number text                                                                                                                                                                                                                                                                                      |
 |  includeComma   |            boolean?            |     false      | Whether the number contains commas                                                                                                                                                                                                                                                                        |
+| locale          |           string?              |    en-US       | Formats animated number as per locale. Also it should be used with `inculdeComma` prop. For list of locales, search for "BCP 47 language tags"   |
 |   configs(1)    |        SpringConfig[]?         | config.default | This module is using [react-spring](https://www.react-spring.io) and you can refer to this [config option](https://react-spring.io/common/configs). If you pass multiple settings, an animation is randomly assigned to each number. _ DO NOT USE `duration` because of a bug that hasn't been fixed yet_ |
 |   configs(2)    | (number, number): SpringConfig | none | The first parameter gives information about the number to be changed, And the second parameter gives information about the order of the changing numbers. You can use that information to adjust the animation by returning the config                                                                    |
 
@@ -59,6 +60,7 @@ function App() {
         includeComma
         animateToNumber={num}
         fontStyle={{ fontSize: 40 }}
+        locale="en-US"
         configs={[
           { mass: 1, tension: 220, friction: 100 },
           { mass: 1, tension: 180, friction: 130 },

@@ -20,11 +20,12 @@ const AnimatedNumber = ({
   fontStyle,
   configs,
   includeComma,
+  locale
 }) => {
   const { ref, inView } = useInView({ triggerOnce: true });
   const keyCount = React.useRef(0);
   const animteTonumberString = includeComma
-    ? Math.abs(animateToNumber).toLocaleString("en-US")
+    ? Math.abs(animateToNumber).toLocaleString(locale || "en-US")
     : String(Math.abs(animateToNumber));
   const animateToNumbersArr = Array.from(animteTonumberString, Number).map(
     (x, idx) => (isNaN(x) ? animteTonumberString[idx] : x)
