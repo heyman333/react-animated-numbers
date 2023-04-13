@@ -1,6 +1,7 @@
 import React from "react";
-import { Spring, animated } from "@react-spring/web";
 import { useInView } from "react-intersection-observer";
+import { motion } from 'framer-motion';
+
 
 const NUMBERS = [
   0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5,
@@ -24,11 +25,11 @@ const AnimatedNumber = ({
 }) => {
   const { ref, inView } = useInView({ triggerOnce: true });
   const keyCount = React.useRef(0);
-  const animteTonumberString = includeComma
+  const animateTonumberString = includeComma
     ? Math.abs(animateToNumber).toLocaleString(locale || "en-US")
     : String(Math.abs(animateToNumber));
-  const animateToNumbersArr = Array.from(animteTonumberString, Number).map(
-    (x, idx) => (isNaN(x) ? animteTonumberString[idx] : x)
+  const animateToNumbersArr = Array.from(animateTonumberString, Number).map(
+    (x, idx) => (isNaN(x) ? animateTonumberString[idx] : x)
   );
 
   const [numberHeight, setNumberHeight] = React.useState(0);
@@ -78,30 +79,20 @@ const AnimatedNumber = ({
                     overflow: "hidden",
                   }}
                 >
-                  <Spring
-                    key={`${keyCount.current++}`}
-                    from={{
-                      transform: "translateY(0px)",
-                    }}
-                    to={{
-                      transform: `translateY(${
-                        -1 * (numberHeight * animateToNumbersArr[index]) -
-                        numberHeight * 20
-                      })`,
-                    }}
-                    config={setConfig(configs, n, index)}
-                  >
-                    {(props) =>
-                      NUMBERS.map((number, i) => (
-                        <animated.div
+                {NUMBERS.map((number, i) => (
+                        <motion.div
                           key={i}
-                          style={{ ...fontStyle,...props }}
+                          style={{ ...fontStyle }}
+                            initial={{ y: "0" }}
+                            animate={{ y:  -1 * (numberHeight * animateToNumbersArr[index]) -
+                            numberHeight * 20
+                          }}
+                          {...setConfig(configs, n, index)}
                         >
                           {number}
-                        </animated.div>
+                        </motion.div>
                       ))
                     }
-                  </Spring>
                 </div>
               );
             })}

@@ -1,13 +1,13 @@
 import React from "react";
-import { SpringConfig } from "@react-spring/web";
+import {MotionProps} from "framer-motion"
 
-type configsFn = (numberValue: number, index: number) => SpringConfig;
+type configsFn = (numberValue: number, index: number) => MotionProps;
 
 export interface Props {
   animateToNumber: number;
   fontStyle?: React.CSSProperties;
   includeComma?: boolean;
-  configs?: SpringConfig[] | configsFn;
+  configs?: MotionProps[] | configsFn;
   locale?: string;
 }
 
