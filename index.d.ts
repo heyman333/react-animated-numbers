@@ -1,14 +1,13 @@
 import React from "react";
-import { SpringConfig } from "@react-spring/web";
-
-type configsFn = (numberValue: number, index: number) => SpringConfig;
+import { Transition } from "framer-motion";
 
 export interface Props {
   animateToNumber: number;
   fontStyle?: React.CSSProperties;
   includeComma?: boolean;
-  configs?: SpringConfig[] | configsFn;
+  transitions?: (index: number) => Transition;
   locale?: string;
+  className?: string;
 }
 
 declare const AnimatedNumber: React.FunctionComponent<Props>;
