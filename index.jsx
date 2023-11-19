@@ -1,28 +1,24 @@
 import React from "react";
-import { Spring, animated } from "@react-spring/web";
-import { useInView } from "react-intersection-observer";
+import { motion, useAnimation, useInView } from "framer-motion";
 
 const NUMBERS = [
   0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5,
   6, 7, 8, 9,
 ];
 
-// utils
-function getRandomIntInclusive(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 // lib
 const AnimatedNumber = ({
+  className,
   animateToNumber,
   fontStyle,
-  configs,
+  transitions,
   includeComma,
-  locale
+  locale,
 }) => {
-  const { ref, inView } = useInView({ triggerOnce: true });
+  const ref = React.useRef(null);
+  const isInView = useInView(ref, { once: true });
+
+  const controls = useAnimation();
   const keyCount = React.useRef(0);
   const animteTonumberString = includeComma
     ? Math.abs(animateToNumber).toLocaleString(locale || "en-US")
@@ -35,15 +31,6 @@ const AnimatedNumber = ({
 
   const numberDivRef = React.useRef(null);
 
-  const setConfig = (configs, number, index) => {
-    if (typeof configs === "function") {
-      return configs(number, index);
-    }
-    return configs
-      ? configs[getRandomIntInclusive(0, configs.length - 1)]
-      : undefined;
-  };
-
   React.useEffect(() => {
     const height = numberDivRef.current.getClientRects()?.[0]?.height;
     if (height) {
@@ -51,60 +38,61 @@ const AnimatedNumber = ({
     }
   }, [animateToNumber, fontStyle]);
 
+  React.useEffect(() => {
+    if (isInView) {
+      controls.start("visible");
+    }
+  }, [isInView, animateToNumber]);
+
   return (
-    <>
+    <span ref={ref}>
       {numberHeight !== 0 && (
         <div
-          ref={ref}
-          style={{ display: "flex", flexDirection: "row" }}
-          className="animated-container"
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            overflow: "hidden",
+          }}
+          className={className}
         >
-          {inView && animateToNumber < 0 && <div style={fontStyle}>-</div>}
-          {inView &&
-            animateToNumbersArr.map((n, index) => {
-              if (typeof n === "string") {
-                return (
-                  <div key={index} style={{ ...fontStyle }}>
-                    {n}
-                  </div>
-                );
-              }
-
+          {animateToNumbersArr.map((n, index) => {
+            if (typeof n === "string") {
               return (
-                <div
-                  key={index}
-                  style={{
-                    height: numberHeight,
-                    overflow: "hidden",
-                  }}
-                >
-                  <Spring
-                    key={`${keyCount.current++}`}
-                    from={{
-                      transform: "translateY(0px)",
-                    }}
-                    to={{
-                      transform: `translateY(${
-                        -1 * (numberHeight * animateToNumbersArr[index]) -
-                        numberHeight * 20
-                      })`,
-                    }}
-                    config={setConfig(configs, n, index)}
-                  >
-                    {(props) =>
-                      NUMBERS.map((number, i) => (
-                        <animated.div
-                          key={i}
-                          style={{ ...fontStyle,...props }}
-                        >
-                          {number}
-                        </animated.div>
-                      ))
-                    }
-                  </Spring>
+                <div key={index} style={{ ...fontStyle }}>
+                  {n}
                 </div>
               );
-            })}
+            }
+
+            return (
+              <div
+                key={index}
+                style={{
+                  height: numberHeight,
+                }}
+              >
+                {NUMBERS.map((number) => (
+                  <motion.div
+                    style={fontStyle}
+                    key={`${keyCount.current++}`}
+                    initial="hidden"
+                    variants={{
+                      hidden: { y: 0 },
+                      visible: {
+                        y:
+                          -1 * (numberHeight * animateToNumbersArr[index]) -
+                          numberHeight * 20,
+                      },
+                    }}
+                    animate={controls}
+                    transition={transitions?.(index)}
+                  >
+                    {number}
+                  </motion.div>
+                ))}
+              </div>
+            );
+          })}
         </div>
       )}
 
@@ -114,12 +102,16 @@ const AnimatedNumber = ({
       >
         {0}
       </div>
-    </>
+    </span>
   );
 };
 
 const Enhanced = React.memo(AnimatedNumber, (prevProps, nextProps) => {
-    return prevProps.animateToNumber === nextProps.animateToNumber && prevProps.fontStyle === nextProps.fontStyle && prevProps.includeComma === nextProps.includeComma;
-})
+  return (
+    prevProps.animateToNumber === nextProps.animateToNumber &&
+    prevProps.fontStyle === nextProps.fontStyle &&
+    prevProps.includeComma === nextProps.includeComma
+  );
+});
 
 export default Enhanced;
