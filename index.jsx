@@ -58,7 +58,10 @@ const AnimatedNumber = ({
           {animateToNumbersArr.map((n, index) => {
             if (typeof n === "string") {
               return (
-                <div key={index} style={{ ...fontStyle }}>
+                <div
+                  key={index}
+                  style={{ ...fontStyle, fontVariantNumeric: "tabular-nums" }}
+                >
                   {n}
                 </div>
               );
@@ -73,7 +76,7 @@ const AnimatedNumber = ({
               >
                 {NUMBERS.map((number) => (
                   <motion.div
-                    style={fontStyle}
+                    style={{ ...fontStyle, fontVariantNumeric: "tabular-nums" }}
                     key={`${keyCount.current++}`}
                     initial="hidden"
                     variants={{
