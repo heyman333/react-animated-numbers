@@ -20,21 +20,23 @@ const AnimatedNumber = ({
 
   const controls = useAnimation();
   const keyCount = React.useRef(0);
-  const animteTonumberString = includeComma
+  const animateTonumberString = includeComma
     ? Math.abs(animateToNumber).toLocaleString(locale || "en-US")
     : String(Math.abs(animateToNumber));
-  const animateToNumbersArr = Array.from(animteTonumberString, Number).map(
-    (x, idx) => (isNaN(x) ? animteTonumberString[idx] : x)
+  const animateToNumbersArr = Array.from(animateTonumberString, Number).map(
+    (x, idx) => (isNaN(x) ? animateTonumberString[idx] : x)
   );
 
   const [numberHeight, setNumberHeight] = React.useState(0);
+  const [numberWidth, setNumberWidth] = React.useState(0);
 
   const numberDivRef = React.useRef(null);
 
   React.useEffect(() => {
-    const height = numberDivRef.current.getClientRects()?.[0]?.height;
-    if (height) {
-      setNumberHeight(height);
+    const rect = numberDivRef.current.getClientRects()?.[0];
+    if (rect) {
+      setNumberHeight(rect.height);
+      setNumberWidth(rect.width);
     }
   }, [animateToNumber, fontStyle]);
 
@@ -56,35 +58,22 @@ const AnimatedNumber = ({
           className={className}
         >
           {animateToNumbersArr.map((n, index) => {
+            const style = { ...fontStyle, fontVariantNumeric: "tabular-nums" };
             if (typeof n === "string") {
-              return (
-                <div
-                  key={index}
-                  style={{ ...fontStyle, fontVariantNumeric: "tabular-nums" }}
-                >
-                  {n}
-                </div>
-              );
+              return <div key={index} style={style}>{n}</div>;
             }
 
             return (
-              <div
-                key={index}
-                style={{
-                  height: numberHeight,
-                }}
-              >
+              <div key={index} style={{ height: numberHeight, width: numberWidth }}>
                 {NUMBERS.map((number) => (
                   <motion.div
-                    style={{ ...fontStyle, fontVariantNumeric: "tabular-nums" }}
+                    style={style}
                     key={`${keyCount.current++}`}
                     initial="hidden"
                     variants={{
                       hidden: { y: 0 },
                       visible: {
-                        y:
-                          -1 * (numberHeight * animateToNumbersArr[index]) -
-                          numberHeight * 20,
+                        y: -1 * (numberHeight * animateToNumbersArr[index]) - numberHeight * 20,
                       },
                     }}
                     animate={controls}
