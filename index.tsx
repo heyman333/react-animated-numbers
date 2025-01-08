@@ -1,12 +1,20 @@
 import React from "react";
-import { motion, useAnimation, useInView } from "framer-motion";
+import { motion, Transition, useAnimation, useInView } from "motion/react";
 
 const NUMBERS = [
   0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5,
   6, 7, 8, 9,
 ];
 
-// lib
+interface Props {
+  className?: string;
+  animateToNumber: number;
+  fontStyle?: React.CSSProperties;
+  transitions?: (index: number) => Transition;
+  includeComma?: boolean;
+  locale?: string;
+}
+
 const AnimatedNumber = ({
   className,
   animateToNumber,
@@ -14,12 +22,11 @@ const AnimatedNumber = ({
   transitions,
   includeComma,
   locale,
-}) => {
+}: Props) => {
   const ref = React.useRef(null);
   const isInView = useInView(ref, { once: true });
 
   const controls = useAnimation();
-  const keyCount = React.useRef(0);
   const animateTonumberString = includeComma
     ? Math.abs(animateToNumber).toLocaleString(locale || "en-US")
     : String(Math.abs(animateToNumber));
@@ -30,21 +37,21 @@ const AnimatedNumber = ({
   const [numberHeight, setNumberHeight] = React.useState(0);
   const [numberWidth, setNumberWidth] = React.useState(0);
 
-  const numberDivRef = React.useRef(null);
+  const numberDivRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
-    const rect = numberDivRef.current.getClientRects()?.[0];
+    const rect = numberDivRef.current?.getClientRects()?.[0];
     if (rect) {
       setNumberHeight(rect.height);
       setNumberWidth(rect.width);
     }
-  }, [animateToNumber, fontStyle]);
+  }, []);
 
   React.useEffect(() => {
     if (isInView) {
       controls.start("visible");
     }
-  }, [isInView, animateToNumber]);
+  }, [isInView, animateToNumber, controls]);
 
   return (
     <span ref={ref}>
@@ -59,29 +66,47 @@ const AnimatedNumber = ({
         >
           {animateToNumbersArr.map((n, index) => {
             if (typeof n === "string") {
-              return <div key={index} style={{ ...fontStyle, fontVariantNumeric: "tabular-nums" }}>{n}</div>;
+              return (
+                <div
+                  key={index}
+                  style={{ ...fontStyle, fontVariantNumeric: "tabular-nums" }}
+                >
+                  {n}
+                </div>
+              );
             }
 
             return (
-              <div key={index} style={{ height: numberHeight, width: numberWidth }}>
+              <motion.div
+                key={`${n}_${index}`}
+                style={{
+                  height: numberHeight,
+                  width: numberWidth,
+                }}
+                initial="hidden"
+                variants={{
+                  hidden: { y: 0 },
+                  visible: {
+                    y:
+                      -1 *
+                        (numberHeight *
+                          (typeof animateToNumbersArr[index] === "number"
+                            ? animateToNumbersArr[index]
+                            : 0)) -
+                      numberHeight * 20,
+                  },
+                }}
+                animate={controls}
+                transition={transitions?.(index)}
+              >
                 {NUMBERS.map((number) => (
-                  <motion.div
+                  <div
                     style={{ ...fontStyle, fontVariantNumeric: "tabular-nums" }}
-                    key={`${keyCount.current++}`}
-                    initial="hidden"
-                    variants={{
-                      hidden: { y: 0 },
-                      visible: {
-                        y: -1 * (numberHeight * animateToNumbersArr[index]) - numberHeight * 20,
-                      },
-                    }}
-                    animate={controls}
-                    transition={transitions?.(index)}
                   >
                     {number}
-                  </motion.div>
+                  </div>
                 ))}
-              </div>
+              </motion.div>
             );
           })}
         </div>
