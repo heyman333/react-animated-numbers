@@ -82,7 +82,7 @@ export default App;
 
 ### GIF
 
-![test](./images/example.gif)
+![test](./images/sample.gif)
 
 ## Todo
 
