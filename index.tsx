@@ -99,8 +99,9 @@ const AnimatedNumber = ({
                 animate={controls}
                 transition={transitions?.(index)}
               >
-                {NUMBERS.map((number) => (
+                {NUMBERS.map((number, index) => (
                   <div
+                    key={number + index}
                     style={{ ...fontStyle, fontVariantNumeric: "tabular-nums" }}
                   >
                     {number}
