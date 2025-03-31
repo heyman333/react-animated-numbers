@@ -1,6 +1,6 @@
 {
   "name": "react-animated-numbers",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Library showing animation of number changes in react.js",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
