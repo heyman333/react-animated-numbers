@@ -11,14 +11,14 @@ Library showing animation of number changes in react.js
 
 ## Props
 
-|      name       |               type               | default | description                                                                                                                                    |
-| :-------------: | :------------------------------: | :-----: | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| animateToNumber |              number              |  none   | Number to be animated                                                                                                                          |
-|    fontStyle    |       React.CSSProperties?       |  none   | Style of number text                                                                                                                           |
-|  includeComma   |             boolean?             |  false  | A value that determines whether to show a comma or not.                                                                                        |
-|     locale      |             string?              |  en-US  | Formats animated number as per locale. Also it should be used with `inculdeComma` prop. For list of locales, search for "BCP 47 language tags" |
-|   transitions   | (index: number) => Transition$1? |  none   | framer-motion [transitions](https://www.framer.com/motion/transition/). The order of numbers shown is passed as a parameter.                   |
-|    className    |             string?              |  none   | ClassName for style                                                                                                                            |
+|         name          |               type               | default | description                                                                                                                                    |
+| :-------------------: | :------------------------------: | :-----: | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+|    animateToNumber    |              number              |  none   | Number to be animated                                                                                                                          |
+|       fontStyle       |       React.CSSProperties?       |  none   | Style of number text                                                                                                                           |
+| useThousandsSeparator |             boolean?             |  false  | A value that determines whether to show a comma or not.                                                                                        |
+|        locale         |             string?              |  en-US  | Formats animated number as per locale. Also it should be used with `inculdeComma` prop. For list of locales, search for "BCP 47 language tags" |
+|      transitions      | (index: number) => Transition$1? |  none   | framer-motion [transitions](https://www.framer.com/motion/transition/). The order of numbers shown is passed as a parameter.                   |
+|       className       |             string?              |  none   | ClassName for style                                                                                                                            |
 
 ### Next JS (< v13.x.x )
 
@@ -57,7 +57,7 @@ function App() {
   return (
     <div className="container">
       <AnimatedNumbers
-        includeComma
+        useThousandsSeparator
         className={styles.container}
         transitions={(index) => ({
           type: "spring",
