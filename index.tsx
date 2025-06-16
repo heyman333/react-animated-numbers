@@ -40,16 +40,16 @@ const AnimatedNumber = ({
     ? Math.abs(animateToNumber).toLocaleString(locale)
     : String(Math.abs(animateToNumber));
 
-  const animateDigits = Array.from(animateNumberStr).map((char) =>
-    /\d/.test(char) ? Number(char) : char
-  );
-
   useEffect(() => {
+    const animateDigits = Array.from(animateNumberStr).map((char) =>
+      /\d/.test(char) ? Number(char) : char
+    );
     const newSeq = animateDigits.map((digit) =>
       typeof digit === "number" ? generateRandomSequence(digit) : digit
     );
+
     setRandomSequences(newSeq);
-  }, [animateDigits, animateToNumber]);
+  }, [animateNumberStr]);
 
   useEffect(() => {
     if (!numberRef.current) return;
