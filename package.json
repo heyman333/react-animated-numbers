@@ -1,54 +1,65 @@
 {
-  "name": "react-animated-numbers",
-  "version": "1.1.1",
-  "description": "Library showing animation of number changes in react.js",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "files": [
-    "/dist"
-  ],
-  "repository": "https://github.com/heyman333/react-animated-numbers.git",
-  "author": "youngsoohan <amazingmobdev@gmail.com>",
-  "homepage": "https://optimistic-noyce-cf2473.netlify.app/",
-  "license": "MIT",
-  "private": false,
-  "keywords": [
-    "react",
-    "react-native",
-    "animation",
-    "animated",
-    "numbers",
-    "number",
-    "spring"
-  ],
-  "babel": {
-    "presets": [
-      "@babel/preset-react"
-    ],
-    "plugins": [
-      "@babel/plugin-proposal-optional-chaining"
-    ]
-  },
-  "scripts": {
-    "build": "tsc"
-  },
-  "bugs": {
-    "url": "https://github.com/heyman333/react-animated-numbers/issues"
-  },
-  "dependencies": {
-    "motion": "^11.16.0"
-  },
-  "devDependencies": {
-    "@babel/cli": "^7.11.6",
-    "@babel/core": "^7.11.6",
-    "@babel/plugin-proposal-optional-chaining": "^7.14.5",
-    "@babel/preset-react": "^7.10.4",
-    "@types/react": "^19.0.3",
-    "typescript": "^5.7.2"
-  },
-  "peerDependencies": {
-    "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
-  },
-  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
+	"name": "react-animated-numbers",
+	"version": "1.1.1",
+	"description": "Library showing animation of number changes in react.js",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"files": [
+		"/dist"
+	],
+	"repository": "https://github.com/heyman333/react-animated-numbers.git",
+	"author": "youngsoohan <amazingmobdev@gmail.com>",
+	"homepage": "https://optimistic-noyce-cf2473.netlify.app/",
+	"license": "MIT",
+	"private": false,
+	"keywords": [
+		"react",
+		"react-native",
+		"animation",
+		"animated",
+		"numbers",
+		"number",
+		"spring"
+	],
+	"babel": {
+		"presets": [
+			"@babel/preset-react"
+		],
+		"plugins": [
+			"@babel/plugin-proposal-optional-chaining"
+		]
+	},
+	"scripts": {
+		"build": "tsc",
+		"test": "jest"
+	},
+	"bugs": {
+		"url": "https://github.com/heyman333/react-animated-numbers/issues"
+	},
+	"dependencies": {
+		"motion": "^11.16.0"
+	},
+	"devDependencies": {
+		"@babel/cli": "^7.11.6",
+		"@babel/core": "^7.11.6",
+		"@babel/plugin-proposal-optional-chaining": "^7.14.5",
+		"@babel/preset-react": "^7.10.4",
+		"@testing-library/dom": "^10.4.0",
+		"@testing-library/jest-dom": "^6.6.3",
+		"@testing-library/react": "^16.3.0",
+		"@types/jest": "^30.0.0",
+		"@types/node": "^24.0.3",
+		"@types/react": "^19.0.3",
+		"jest": "^30.0.2",
+		"jest-environment-jsdom": "^30.0.2",
+		"react": "^19.1.0",
+		"react-dom": "^19.1.0",
+		"ts-jest": "^29.4.0",
+		"typescript": "^5.7.2"
+	},
+	"peerDependencies": {
+		"react": ">=16.8.0",
+		"react-dom": ">=16.8.0"
+	},
+	"packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
 }
